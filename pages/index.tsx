@@ -4,14 +4,18 @@ import { AxiosResponse } from "axios";
 import { ChatCompletionRequestMessage, Configuration, CreateChatCompletionResponse, OpenAIApi } from "openai";
 import styles from './index.module.css';
 
-const organization = process.env.NEXT_PUBLIC_OPEN_AI_ORG;
-const apiKey = process.env.NEXT_PUBLIC_OPEN_AI_API_KEY;
-
-
 const Home = () => {
   const [inputText, setInputText] = useState<string>('');
   const [conversation, setConversation] = useState<ChatCompletionRequestMessage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [secretKey, setSecretKey] = useState<string>("");
+  const [orgId, setOrgId] = useState<string>("");
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
+  const setCredentials = (event: SyntheticEvent) => {
+    event.preventDefault();
+    setDialogOpen(false);
+  }
 
   const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(event.target.value);
@@ -28,13 +32,10 @@ const Home = () => {
         content: inputText
       }
       const updatedConversation = [...conversation, newMessage];
-      setConversation(updatedConversation);
-      setInputText('');
-
       
       const configuration = new Configuration({
-        organization: organization,
-        apiKey: apiKey,
+        organization: orgId,
+        apiKey: secretKey,
       });
 
       const openai = new OpenAIApi(configuration);
@@ -58,6 +59,7 @@ const Home = () => {
           content: choices[0].message?.content
         }
         setConversation([...updatedConversation, newMessage]);
+        setInputText('');
       }
       else {
         console.log('No response from OpenAI');
@@ -69,7 +71,22 @@ const Home = () => {
 
   return (
     <main className={styles.pageContent}>
-      <h1>OpenAI Client</h1>
+      
+      <dialog open={dialogOpen} className={styles.dialog}>
+        <form onSubmit={setCredentials}>
+          <label>Secret Key</label>
+          <input type="text" value={secretKey} onChange={(event) => setSecretKey(event.target.value)}></input>
+          <label>Organization ID</label>
+          <input type="text" value={orgId} onChange={(event) => setOrgId(event.target.value)}></input>
+          <button type="submit">Save and close</button>
+        </form>
+      </dialog>
+
+      <div className={styles.header}>
+        <h1>OpenAI Client</h1>
+        <button onClick={() => setDialogOpen(true)}>Set credentials</button>
+      </div>
+
       <div className={styles.conversationWrapper}>
         <div className={styles.conversation}>
           {
@@ -88,15 +105,25 @@ const Home = () => {
               value={inputText}
               onChange={handleInputChange}
             />
-            {loading ?
-            <div className={styles.submitButton}>
-              <Image src={require('../images/throbber.gif')} alt="loading" />
-            </div>
-            :
-            <button type="submit" className={styles.submitButton}>Send</button>}
+            {!dialogOpen ?
+              <>
+                {loading ?
+                  <div className={`${styles.submitButton} button`}>
+                    <Image src={require('../images/throbber.gif')} alt="loading" />
+                  </div>
+                  :
+                  <button type="submit" className={styles.submitButton}>Send</button>
+                }
+              </>
+              :
+              <>
+                <div className={`${styles.submitButton} button`}>...</div>
+              </>
+            }
           </form>
         </div>
       </div>
+      
     </main>
   )
 }

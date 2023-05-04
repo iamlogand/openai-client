@@ -8,11 +8,27 @@ body {
   height: 100%;
   font-family: Arial, sans-serif;
   padding: 15px;
+  padding-top: 0;
   box-sizing: border-box;
 }
 
 h1 {
   font-size: 30px;
   margin-top: 0px;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
+}
+
+button,
+.button {
+  font-family: inherit;
+  font-size: inherit;
+  color: white;
+  background-color: rgb(82, 82, 174);
+  border: none;
+  border-radius: 3px;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
 }
