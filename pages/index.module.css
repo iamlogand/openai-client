@@ -10,6 +10,7 @@
   justify-content: space-between;
   margin: 15px 0;
   flex-wrap: wrap;
+  gap: 15px;
 }
 
 .header button {
@@ -28,14 +29,25 @@
   flex-direction: column;
   flex-shrink: 0;
   min-height: 100px;
-  height: calc(100% - 200px);
-  max-height: calc(100vh - 230px);
+  height: 100%;
   background-color: #f0f0f0;
   resize: vertical;
   overflow: auto;
   padding: 15px;
   border-radius: 3px;
   gap: 15px;
+}
+
+@media (min-width: 600px) {
+  .conversation {
+    max-height: calc(100vh - 195px);
+  }
+}
+
+@media (max-width: 599px) {
+  .conversation {
+    max-height: calc(100vh - 290px);
+  }
 }
 
 .message {
@@ -59,7 +71,7 @@
   flex-direction: column;
 }
 
-.pageContent form {
+.formWrapper form {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
@@ -68,7 +80,7 @@
   align-items: center;
 }
 
-.pageContent form textarea {
+.formWrapper form textarea {
   resize: none;
   width: 100%;
   height: 100%;
@@ -81,7 +93,7 @@
 
 .submitButton {
   min-width: 80px;
-  height: 80px;
+  height: 70px;
 
   display: flex;
   justify-content: center;
@@ -95,26 +107,50 @@
   filter: invert(1) brightness(1.5) contrast(1);
 }
 
-.pageContent form button:active {
-  background-color: black;
+.disabled {
+  background-color: gray;
 }
 
-.dialog {
-  margin-top: 10px;
-  padding: 0 15px 15px;
+.request {
+  background-color: rgb(63, 134, 99);
 }
 
-.dialog form {
+.buttonArea {
+  display: flex;
+  gap: 15px;
+  flex-direction: row;
+}
+
+@media (min-width: 600px) {
+  .buttonArea {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 599px) {
+  .buttonArea {
+    flex-direction: column;
+  }
+}
+
+.settings {
+  padding: 15px;
+  background-color: #f0f0f0;
+}
+
+.settings form {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 15px;
 }
 
-.dialog form input {
+.settings form input {
   margin-top: -8px;
+  max-width: 500px;
 }
 
-.dialog form button {
+.settings form button {
   height: 30px;
   padding: 0 10px;
 }
