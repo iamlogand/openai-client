@@ -12,6 +12,11 @@ interface MessageProps {
 
 const Message = (props: MessageProps) => {
   const [hovering, setHovering] = useState<Boolean>(false);
+  const [hoveringBin, setHoveringBin] = useState<Boolean>(false);
+
+  const getStyle = () => {
+    if (hoveringBin) return {color: "red"};
+  }
 
   return (
     <div 
@@ -19,12 +24,25 @@ const Message = (props: MessageProps) => {
       className={`${styles.message} ${props.message.role === 'user' ? styles.user : styles.assistant}`}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
+      style={getStyle()}
     >
       
       {hovering ?
-      <FontAwesomeIcon icon={faTrash} className={styles.bin} onClick={() => props.deleteMessage(props.index)} /> : <div className={styles.bin}></div>}
+        <div
+          className={styles.bin}
+          onMouseEnter={() => setHoveringBin(true)}
+          onMouseLeave={() => setHoveringBin(false)}
+        >
+          <FontAwesomeIcon
+            icon={faTrash}
+            onClick={() => props.deleteMessage(props.index)}
+          />
+        </div>
+        :
+        <div className={styles.bin}>{props.index + 1}</div>
+      }
 
-      <div className={styles.role}>{props.message.role === 'user' ? 'You' : 'OpenAI'}</div>
+      <div className={styles.role}>{props.message.role === 'user' ? 'You' : 'AI'}</div>
       <div>{props.message.content}</div>
     </div>
   )
