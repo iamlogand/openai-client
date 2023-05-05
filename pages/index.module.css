@@ -1,7 +1,7 @@
 .pageContent {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 15px);
+  height: 100%;
 }
 
 .header {
@@ -36,17 +36,13 @@
   padding: 15px;
   border-radius: 3px;
   gap: 15px;
-}
 
-@media (min-width: 600px) {
-  .conversation {
-    max-height: calc(100vh - 195px);
-  }
+  max-height: calc(100vh - 195px);
 }
 
 @media (max-width: 599px) {
   .conversation {
-    max-height: calc(100vh - 290px);
+    max-height: calc(100vh - 240px);
   }
 }
 
@@ -100,6 +96,12 @@
   align-items: center;
 }
 
+@media (max-width: 599px) {
+  .submitButton {
+    height: 50px;
+  }
+}
+
 .submitButton img {
   width: 30px;
   height: 30px;
@@ -119,12 +121,6 @@
   display: flex;
   gap: 15px;
   flex-direction: row;
-}
-
-@media (min-width: 600px) {
-  .buttonArea {
-    flex-direction: row;
-  }
 }
 
 @media (max-width: 599px) {
@@ -148,6 +144,7 @@
 .settings form input {
   margin-top: -8px;
   max-width: 500px;
+  width: calc(100% - 15px);
 }
 
 .settings form button {
