@@ -1,0 +1,36 @@
+.message {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.message:hover {
+  background-color: rgba(255, 255, 255, 0.37);
+}
+
+.bin {
+  min-width: 14px;
+  margin-right: 18px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.199);
+}
+
+@media (max-width: 600px) {
+  .bin {
+    margin-right: 8px;
+  }
+}
+
+.bin:hover {
+  color: rgb(0, 0, 0);
+}
+
+.role {
+  text-transform: capitalize;
+  min-width: 80px;
+  font-weight: bold;
+}
+
+.assistant {
+  color: rgb(35, 136, 128);
+}

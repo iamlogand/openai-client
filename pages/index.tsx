@@ -1,9 +1,11 @@
+
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import Image from 'next/image';
 import { AxiosResponse } from "axios";
 import { ChatCompletionRequestMessage, Configuration, CreateChatCompletionResponse, OpenAIApi } from "openai";
 import styles from './index.module.css';
 import useCookies from "@/hooks/useCookies";
+import Message from "@/components/Message";
 
 const Home = () => {
   const [inputText, setInputText] = useState<string>('');
@@ -41,8 +43,7 @@ const Home = () => {
     setLoading(true);
 
     if (conversation.length > 0) {
-      
-      
+        
       const configuration = new Configuration({
         organization: orgId,
         apiKey: secretKey,
@@ -78,6 +79,15 @@ const Home = () => {
     setLoading(false);
   }
 
+  const deleteMessage = (index: number) => {
+    console.log("hello" + index)
+    if (index >= 0 && index < conversation.length) {
+      const updatedConvo = [...conversation];
+      updatedConvo.splice(index, 1);
+      setConversation(updatedConvo);
+    }
+  }
+
   return (
     <main className={styles.pageContent}>
       
@@ -108,10 +118,7 @@ const Home = () => {
           <div className={styles.conversation}>
             {
               conversation.map((message, index) => (
-                <div key={index} className={`${styles.message} ${message.role === 'user' ? styles.user : styles.assistant}`}>
-                  <div className={styles.role}>{message.role === 'user' ? 'You' : 'OpenAI'}</div>
-                  <div>{message.content}</div>
-                </div>
+                <Message index={index} message={message} deleteMessage={deleteMessage} />
               ))
             }
           </div>
