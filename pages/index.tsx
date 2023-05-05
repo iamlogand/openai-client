@@ -121,7 +121,7 @@ const Home = () => {
           <div className={styles.conversation}>
             {
               conversation.map((message, index) => (
-                <Message index={index} message={message} deleteMessage={deleteMessage} />
+                <Message index={index} message={message} deleteMessage={deleteMessage} key={index} />
               ))
             }
           </div>
