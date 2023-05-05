@@ -7,6 +7,8 @@ import styles from './index.module.css';
 import useCookies from "@/hooks/useCookies";
 import Message from "@/components/Message";
 
+const MODEL_NAME = "gpt-3.5-turbo"
+
 const Home = () => {
   const [inputText, setInputText] = useState<string>('');
   const [conversation, setConversation] = useState<ChatCompletionRequestMessage[]>([]);
@@ -54,7 +56,7 @@ const Home = () => {
       let response;
       try {
         response = (await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
+          model: MODEL_NAME,
           messages: conversation,
         })) as AxiosResponse<CreateChatCompletionResponse>;
       } catch (error) {
@@ -101,7 +103,8 @@ const Home = () => {
         <div className={styles.conversationWrapper}>
           <div className={styles.settings}>
             <h2>Settings</h2>
-            <p>You can generate a secret key by signing up for an account at <a href="https://platform.openai.com/" target="_blank">OpenAI</a> and adding a payment method. These values are only stored in your local cookies.</p>
+            <p>You can generate a secret key by signing up for an account at <a href="https://platform.openai.com/" target="_blank">OpenAI</a> and adding a payment method. OpenAI will charge you for using their API via this app. The model used is {MODEL_NAME}.</p>
+            <p>These credentials are only stored in your local cookies and are only sent to OpenAI. Enter them at your own risk.</p>
             <form onSubmit={closeSettings}>
               <label>Secret Key</label>
               <input type="text" value={secretKey} onChange={(event) => setSecretKey(event.target.value)}></input>
