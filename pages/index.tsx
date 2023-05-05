@@ -6,6 +6,7 @@ import { ChatCompletionRequestMessage, Configuration, CreateChatCompletionRespon
 import styles from './index.module.css';
 import useCookies from "@/hooks/useCookies";
 import Message from "@/components/Message";
+import Head from "next/head";
 
 const MODEL_NAME = "gpt-3.5-turbo"
 
@@ -92,7 +93,9 @@ const Home = () => {
 
   return (
     <main className={styles.pageContent}>
-      
+      <Head>
+        <title>OpenAI Client</title>
+      </Head>
 
       <div className={styles.header}>
         <h1>OpenAI Client</h1>
